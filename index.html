@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEMERINTAHAN NAGARA
+    </title>
+</head>
+<body>
+    
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Stok Barang</title>
+    <!-- Bootstrap untuk gaya modern -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Link ke file CSS eksternal -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="header">
+            <h1>Manajemen Stok Barang</h1>
+            <p>Sistem sederhana untuk mengelola stok dengan mudah</p>
+        </div>
+        
+        <!-- Navigasi -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#dashboard" onclick="showSection('dashboard')">Dashboard Stok</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#add" onclick="showSection('add')">Tambah Barang (Masuk)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#remove" onclick="showSection('remove')">Barang Keluar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#history" onclick="showSection('history')">Riwayat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#report" onclick="showSection('report')">Laporan Bulanan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#employees" onclick="showSection('employees')">Data Karyawan</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dashboard Stok -->
+        <div id="dashboard" class="section">
+            <h2>Dashboard Stok Barang</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nama Barang</th>
+                        <th>Jumlah</th>
+                        <th>Harga Satuan</th>
+                        <th>Harga Paket</th>
+                        <th>Karyawan Pengisi</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="stockTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Tambah Barang (Masuk) -->
+        <div id="add" class="section" style="display:none;">
+            <h2>Tambah Barang (Masuk)</h2>
+            <div class="card p-4">
+                <form id="addForm">
+                    <div class="mb-3">
+                        <label for="itemName" class="form-label">Nama Barang</label>
+                        <input type="text" id="itemName" class="form-control" placeholder="Ketik nama barang (baru atau yang sudah ada)" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Jumlah</label>
+                        <input type="number" id="quantity" class="form-control" required min="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="unitPrice" class="form-label">Harga Satuan</label>
+                        <input type="number" id="unitPrice" class="form-control" required min="0" step="0.01">
+                    </div>
+                    <div class="mb-3">
+                        <label for="packPrice" class="form-label">Harga Paket</label>
+                        <input type="number" id="packPrice" class="form-control" required min="0" step="0.01">
+                    </div>
+                    <div class="mb-3">
+                        <label for="employee" class="form-label">Karyawan Pengisi</label>
+                        <select id="employee" class="form-control" required>
+                            <option value="">Pilih Karyawan</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Tambah Barang</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Barang Keluar -->
+        <div id="remove" class="section" style="display:none;">
+            <h2>Barang Keluar</h2>
+            <div class="card p-4">
+                <form id="removeForm">
+                    <div class="mb-3">
+                        <label for="removeItemName" class="form-label">Nama Barang</label>
+                        <select id="removeItemName" class="form-control" required>
+                            <option value="">Pilih Barang</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="removeQuantity" class="form-label">Jumlah Keluar</label>
+                        <input type="number" id="removeQuantity" class="form-control" required min="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="removeEmployee" class="form-label">Karyawan Pengambil</label>
+                        <select id="removeEmployee" class="form-control" required>
+                            <option value="">Pilih Karyawan</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kurangi Barang</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Riwayat -->
+        <div id="history" class="section" style="display:none;">
+            <h2>Riwayat Keluar Masuk dan Perubahan</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Tanggal & Waktu</th>
+                        <th>Aksi</th>
+                        <th>Barang</th>
+                        <th>Jumlah</th>
+                        <th>Karyawan</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Laporan Bulanan -->
+        <div id="report" class="section" style="display:none;">
+            <h2>Laporan Bulanan</h2>
+            <div class="card p-4 mb-4">
+                <form id="reportForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="reportMonth" class="form-label">Bulan</label>
+                            <select id="reportMonth" class="form-control" required>
+                                <option value="">Pilih Bulan</option>
+                                <option value="1">Januari</option>
+                                <option value="2">Februari</option>
+                                <option value="3">Maret</option>
+                                <option value="4">April</option>
+                                <option value="5">Mei</option>
+                                <option value="6">Juni</option>
+                                <option value="7">Juli</option>
+                                <option value="8">Agustus</option>
+                                <option value="9">September</option>
+                                <option value="10">Oktober</option>
+                                <option value="11">November</option>
+                                <option value="12">Desember</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="reportYear" class="form-label">Tahun</label>
+                            <input type="number" id="reportYear" class="form-control" placeholder="e.g. 2023" required>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary">Generate Laporan</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="reportResult" style="display:none;">
+                <h3>Laporan untuk <span id="reportTitle"></span></h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Tanggal & Waktu</th>
+                            <th>Aksi</th>
+                            <th>Barang</th>
+                            <th>Jumlah</th>
+                            <th>Karyawan</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reportTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Data Karyawan -->
+        <div id="employees" class="section" style="display:none;">
+            <h2>Data Karyawan</h2>
+            <div class="card p-4 mb-4">
+                <form id="employeeForm">
+                    <div class="mb-3">
+                        <label for="empName" class="form-label">Nama Karyawan</label>
+                        <input type="text" id="empName" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="empId" class="form-label">ID Karyawan</label>
+                        <input type="text" id="empId" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="empPosition" class="form-label">Jabatan</label>
+                        <input type="text" id="empPosition" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Tambah Karyawan</button>
+                </form>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>ID</th>
+                        <th>Jabatan</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Link ke file JS eksternal -->
+    <script src="script.js"></script>
+</body>
+</html>
